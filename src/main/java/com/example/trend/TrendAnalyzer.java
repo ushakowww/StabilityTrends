@@ -11,13 +11,15 @@ public class TrendAnalyzer {
 
         for (int i = 1; i < series.size(); i++) {
             double diff = Math.abs(series.get(i) - series.get(i - 1));
-            if (diff <= threshold) {
+
+            if (diff < threshold) {
                 stable++;
             } else {
                 String tFrom = (i - 1) < times.size() ? times.get(i - 1) : String.valueOf(i - 1);
                 String tTo   = i < times.size() ? times.get(i) : String.valueOf(i);
                 jumps.add(new Jump(i - 1, tFrom, tTo, diff));
             }
+
             if (diff > maxJump) maxJump = diff;
         }
 
