@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
+import java.nio.file.Path;
 
 public class TrendAppFrame extends JFrame {
 
@@ -76,11 +77,33 @@ public class TrendAppFrame extends JFrame {
         String path = fileField.getText().trim();
         double threshold = ((Number) thresholdSpinner.getValue()).doubleValue();
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("Результат анализа\n");
-        sb.append("Файл: ").append(path.isEmpty() ? "<не выбран>" : path).append('\n');
-        sb.append("Порог скачка: ").append(threshold).append('\n');
+        if (path.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Выберите CSV файл",
+                    "Нет файла", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-        output.setText(sb.toString());
+        try {
+            CsvLoader.DataSet ds = CsvLoader.load(Path.of(path));
+
+            int n1 = ds.trend1.size();
+            int n2 = ds.trend2.size();
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("Результат анализа\n");
+            sb.append("Файл: ").append(path).append('\n');
+            sb.append("Порог скачка: ").append(threshold).append("\n\n");
+
+            sb.append("Тренды:\n");
+            sb.append(" - ").append(ds.trend1Name).append(": ").append(n1).append(" точек\n");
+            sb.append(" - ").append(ds.trend2Name).append(": ").append(n2).append(" точек\n");
+
+            output.setText(sb.toString());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this,
+                    "Ошибка при чтении CSV: " + ex.getMessage(),
+                    "Ошибка", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
