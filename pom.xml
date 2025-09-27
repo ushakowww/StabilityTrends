@@ -23,7 +23,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.example.Main</mainClass>
+                            <mainClass>com.example.trend.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
