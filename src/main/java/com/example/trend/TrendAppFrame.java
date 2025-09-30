@@ -17,8 +17,8 @@ public class TrendAppFrame extends JFrame {
     private final JLabel lblStab2 = new JLabel("-");
     private final JLabel lblMaxAll1 = new JLabel("-");
     private final JLabel lblMaxAll2 = new JLabel("-");
-    private final JLabel lblMaxOver1 = new JLabel("-");
-    private final JLabel lblMaxOver2 = new JLabel("-");
+    private final JLabel lblMinOver1 = new JLabel("-");
+    private final JLabel lblMinOver2 = new JLabel("-");
     private final JTextArea output = new JTextArea();
     private final JTable jumpsTable = new JTable();
     private final JumpTableModel jumpsModel = new JumpTableModel(java.util.Collections.emptyList());
@@ -108,8 +108,8 @@ public class TrendAppFrame extends JFrame {
 
     private JPanel buildDashboard() {
         JPanel p = new JPanel(new GridLayout(1,2,10,10));
-        p.add(buildTrendCard("Тренд 1", lblStab1, lblMaxAll1, lblMaxOver1));
-        p.add(buildTrendCard("Тренд 2", lblStab2, lblMaxAll2, lblMaxOver2));
+        p.add(buildTrendCard("Тренд 1", lblStab1, lblMaxAll1, lblMinOver1));
+        p.add(buildTrendCard("Тренд 2", lblStab2, lblMaxAll2, lblMinOver2));
         return p;
     }
 
@@ -185,8 +185,8 @@ public class TrendAppFrame extends JFrame {
                 lblStab2.setText(String.format("%.2f", r2.getStabilityPercent()));
                 lblMaxAll1.setText(String.format("%.3f", r1.maxJump));
                 lblMaxAll2.setText(String.format("%.3f", r2.maxJump));
-                lblMaxOver1.setText(r1.getJumpPairs() > 0 ? String.format("%.3f", minOver1) : "-");
-                lblMaxOver2.setText(r2.getJumpPairs() > 0 ? String.format("%.3f", minOver2) : "-");
+                lblMinOver1.setText(r1.getJumpPairs() > 0 ? String.format("%.3f", minOver1) : "-");
+                lblMinOver2.setText(r2.getJumpPairs() > 0 ? String.format("%.3f", minOver2) : "-");
                 dashboardPanel.setVisible(true);
             }
 
